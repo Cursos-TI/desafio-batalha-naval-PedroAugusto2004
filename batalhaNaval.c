@@ -1,40 +1,90 @@
 #include <stdio.h>
+#define TAM 10 // Tamanho do tabuleiro (10x10)
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+// Função para inicializar a matriz com 0
+void inicializarMatriz(int matriz[TAM][TAM]) {
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            matriz[i][j] = 0; // Inicializa todas as células com 0
+        }
+    }
+}
+
+// Função para exibir a matriz no console
+void exibirMatriz(int matriz[TAM][TAM]) {
+    for (int i = 0; i < TAM; i++) {
+        for (int j = 0; j < TAM; j++) {
+            printf("%d ", matriz[i][j]); // Exibe cada elemento
+        }
+        printf("\n"); // Quebra de linha para o próximo nível
+    }
+}
+
+// Função para criar o padrão em cone
+void habilidadeCone(int matriz[TAM][TAM], int x, int y) {
+    // Define o formato do cone
+    for (int i = -2; i <= 2; i++) {
+        for (int j = -2; j <= 2; j++) {
+            if (x + i >= 0 && x + i < TAM && y + j >= 0 && y + j < TAM) {
+                // Condição para a forma de um cone
+                if (abs(i) + abs(j) <= 2) {
+                    matriz[x + i][y + j] = 1;
+                }
+            }
+        }
+    }
+}
+
+// Função para criar o padrão em cruz
+void habilidadeCruz(int matriz[TAM][TAM], int x, int y) {
+    for (int i = -2; i <= 2; i++) {
+        if (x + i >= 0 && x + i < TAM) {
+            matriz[x + i][y] = 1; // Linha vertical da cruz
+        }
+        if (y + i >= 0 && y + i < TAM) {
+            matriz[x][y + i] = 1; // Linha horizontal da cruz
+        }
+    }
+}
+
+// Função para criar o padrão em octaedro
+void habilidadeOctaedro(int matriz[TAM][TAM], int x, int y) {
+    for (int i = -2; i <= 2; i++) {
+        for (int j = -2; j <= 2; j++) {
+            if (x + i >= 0 && x + i < TAM && y + j >= 0 && y + j < TAM) {
+                // Condição para a forma de um octaedro
+                if (abs(i) + abs(j) <= 2) {
+                    matriz[x + i][y + j] = 1;
+                }
+            }
+        }
+    }
+}
 
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+    int tabuleiro[TAM][TAM];
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
+    // Inicializar e exibir habilidade cone
+    inicializarMatriz(tabuleiro);
+    habilidadeCone(tabuleiro, 4, 4); // Coordenadas centrais
+    printf("Habilidade: Cone\n");
+    exibirMatriz(tabuleiro);
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+    printf("\n");
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+    // Inicializar e exibir habilidade cruz
+    inicializarMatriz(tabuleiro);
+    habilidadeCruz(tabuleiro, 4, 4); // Coordenadas centrais
+    printf("Habilidade: Cruz\n");
+    exibirMatriz(tabuleiro);
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+    printf("\n");
+
+    // Inicializar e exibir habilidade octaedro
+    inicializarMatriz(tabuleiro);
+    habilidadeOctaedro(tabuleiro, 4, 4); // Coordenadas centrais
+    printf("Habilidade: Octaedro\n");
+    exibirMatriz(tabuleiro);
 
     return 0;
 }
